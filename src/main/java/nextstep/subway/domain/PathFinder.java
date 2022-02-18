@@ -38,8 +38,12 @@ public class PathFinder {
 		line.getStations().forEach(graph::addVertex);
 	}
 
-	public GraphPath findRoute(List<Line> lines, Station depart, Station arrival) {
+	public GraphPath findRoute(Station depart, Station arrival) {
 		GraphPath paths = dijkstraShortestPath.getPath(depart, arrival);
+
+		if (depart.equals(arrival)) {
+			throw new IllegalArgumentException("출발지와 도착지를 동일한 역으로 설정할 수 없습니다.");
+		}
 
 		if (paths == null) {
 			throw new NotFoundPathException(depart.getName(), arrival.getName());
